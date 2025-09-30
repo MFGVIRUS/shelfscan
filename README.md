@@ -51,7 +51,7 @@ Each release includes the following files (`x.x.x` denotes the version number):
 - Install the [.NET 8.0 runtime](https://learn.microsoft.com/en-gb/dotnet/core/install/linux?WT.mc_id=dotnet-35129-website) inside the container or use a [.NET container image](https://learn.microsoft.com/en-gb/dotnet/core/docker/introduction#net-images).
 - ⚠️ Do not install the SDK, ASP.NET Core Runtime, or Desktop Runtime.
 - Use the `ShelfScan-x.x.x-linux-x64` binary inside the container.
-- Mount your photo folders into the container with appropriate read and write access.
+- Mount your media folders into the container with appropriate read access.
 
 ### Platform testing notes
 
