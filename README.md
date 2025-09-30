@@ -70,6 +70,14 @@ ShelfScan is a command-line tool. Run it from a terminal or command prompt, supp
 ShelfScan <folder> [movie|tv]
 ```
 
+If you wish to save the output to a file then append `> [filename]` - for example:
+
+```
+Shelfscan d:\movies > report.txt
+```
+
+Command line arguments:
+
 - **`<folder>`**   
   Mandatory. Specifies the folder containing media content.
 
