@@ -9,12 +9,15 @@ ShelfScan scans a folder (either locally or on a network) and generates a detail
 >- **This is a very early beta release.** There may be mistakes in the filename validation.
 >- **File name checks are very strict**. Issues identified by ShelfScan does not necessarily mean there is a problem with it within Plex.
 
-## 🌍 Resources
+## 🧰 Features
 
-The Plex website provides good documentation to help your organise and name your content.
--  [Naming and organizing your movie media files](https://support.plex.tv/articles/naming-and-organizing-your-movie-media-files/)
--  [Naming and organizing your TV show files](https://support.plex.tv/articles/naming-and-organizing-your-tv-show-files/).
-
+- 💻 Runs on Windows 10 & 11, Linux (x64, ARM64, ARM32), and macOS (Intel & Apple Silicon).
+- 📂 Scans local and network folders for TV shows and movies.
+- 📝 Generates a detailed compliance report showing valid and invalid files.
+- ⚠️ Strict file format checking to ensure consistency with Plex naming conventions.
+- 🔍 Detects multi-episode formatting issues and folder structure inconsistencies.
+- 🛠️ Early beta with user feedback encouraged via GitHub.
+- 📚 Includes links to official format specs and resources for reference.
 
 ## 📦 Download
 
@@ -68,7 +71,7 @@ ShelfScan <folder> [movie|tv]
 ```
 
 - **`<folder>`**   
-  Specifies the folder containing media content.
+  Mandatory. Specifies the folder containing media content.
 
 - **`[movie|tv]`**   
   Optional. By default, ShelfScan will attempt to automatically detect the content type. If it gets it wrong then you can override this by supplying either `movie` or `tv`.
@@ -87,6 +90,12 @@ Afterwards, music libraries may be considered.
 
 - Bookshelf icons created by smalllikeart - Flaticon (https://www.flaticon.com/free-icons/bookshelf)
 - Plex is a registered trademark of Plex, Inc. This tool is not affiliated with or endorsed by Plex, Inc.
+
+## 🌍 Resources
+
+The Plex website provides good documentation to help your organise and name your content.
+-  [Naming and organizing your movie media files](https://support.plex.tv/articles/naming-and-organizing-your-movie-media-files/)
+-  [Naming and organizing your TV show files](https://support.plex.tv/articles/naming-and-organizing-your-tv-show-files/).
 
 ## 🕰️ Version history
 
