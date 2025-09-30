@@ -5,6 +5,8 @@ _A cross-platform command-line tool (Windows, Linux, macOS) for scanning a media
 
 ShelfScan scans a folder (either locally or on a network) and generates a detailed report indicating how compliant the files are with Plex's naming conventions. It identifies issues with file names, folder structures, and multi-episode formatting for both movies and TV shows. Support for music is not yet implemented.
 
+ShelfScan does not modify or rename any files. It's purpose is solely inspection and reporting of file/folder naming issues.
+
 >[!CAUTION]
 >- **This is a very early beta release.** There may be mistakes in the filename validation.
 >- **File name checks are very strict**. Issues identified by ShelfScan does not necessarily mean there is a problem with it within Plex.
@@ -13,6 +15,7 @@ ShelfScan scans a folder (either locally or on a network) and generates a detail
 
 - 💻 Runs on Windows 10 & 11, Linux (x64, ARM64, ARM32), and macOS (Intel & Apple Silicon).
 - 📂 Scans local and network folders for TV shows and movies.
+- 🛡️ Read-only scanning – your files are never modified.
 - 📝 Generates a detailed compliance report showing valid and invalid files.
 - ⚠️ Strict file format checking to ensure consistency with Plex naming conventions.
 - 🔍 Detects multi-episode formatting issues and folder structure inconsistencies.
