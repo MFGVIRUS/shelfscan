@@ -19,6 +19,7 @@ ShelfScan does not modify or rename any files. It's purpose is solely inspection
 - 📝 Generates a detailed compliance report showing valid and invalid files.
 - ⚠️ Strict file format checking to ensure consistency with Plex naming conventions.
 - 🔍 Detects multi-episode formatting issues and folder structure inconsistencies.
+- 🧪 Test folder containing dummy movies and TV shows for validation.
 - 🛠️ Early beta with user feedback encouraged via GitHub.
 - 📚 Includes links to official format specs and resources for reference.
 
@@ -82,7 +83,7 @@ Shelfscan d:\movies > report.txt
 Command line arguments:
 
 - **`<folder>`**   
-  Mandatory. Specifies the folder containing media content.
+  Mandatory. Specifies the folder containing media content. Make sure that you provide the same top-level directory as you have configured in Plex.
 
 - **`[movie|tv]`**   
   Optional. By default, ShelfScan will attempt to automatically detect the content type. If it gets it wrong then you can override this by supplying either `movie` or `tv`.
@@ -93,7 +94,7 @@ Please raise an issue at https://github.com/mrsilver76/shelfscan/issues.
 
 ## 💡 Future development
 
-As this is an early beta, the goal is to get movie and tv show validation as accurate as possible.
+As this is an early beta, the goal is to get movie and TV show validation as accurate as possible.
 
 Afterwards, music libraries may be considered.
 
@@ -109,6 +110,16 @@ The Plex website provides good documentation to help your organise and name your
 -  [Naming and organizing your TV show files](https://support.plex.tv/articles/naming-and-organizing-your-tv-show-files/).
 
 ## 🕰️ Version history
+
+### 0.5.0 (02 October 2025)
+- Rewrote movie verification to improve brace handling, allow `{}` tags in any order, and parse filenames with optional split parts (`ptX` etc).
+- Fixed featurette detection
+- Removed "Plex Versions" from validation
+- Fixed date formats with periods/spaces
+- Fixed season parsing with 4-digit years
+- Fixed incorrect `.avi` rejection
+- Added percentage score and motivational message
+- Added fictional test library (passing & failing) to the source code
 
 ### 0.0.1 (30 September 2025)
 - Initial release.
