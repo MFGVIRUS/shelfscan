@@ -24,7 +24,7 @@ namespace ShelfScan
     internal sealed class Program
     {
         /// <summary>Version of this application.</summary>
-        public static string AppVersion { get; } = "0.0.1";
+        public static string AppVersion { get; } = "0.5.0";
 
         static void Main(string[] args)
         {
@@ -79,9 +79,7 @@ namespace ShelfScan
             List<string> files = [];
             try
             {
-                files.AddRange(Directory.GetFiles(folder, "*.mkv", SearchOption.AllDirectories));
-                files.AddRange(Directory.GetFiles(folder, "*.mp4", SearchOption.AllDirectories));
-                files.AddRange(Directory.GetFiles(folder, "*.avi", SearchOption.AllDirectories));
+                AddMediaFiles(folder, files, [".mkv", ".mp4", ".avi"]);
             }
             catch (Exception ex)
             {
@@ -126,7 +124,7 @@ namespace ShelfScan
             foreach (var file in files)
             {
                 if (mediaType == "movie")
-                    isValid = PlexMovieVerifier.VerifyMovies(file);
+                    isValid = PlexMovieVerifier.VerifyMovies(file, folder);
                 else
                     isValid = PlexShowVerifier.VerifyShow(file);
 
@@ -143,6 +141,16 @@ namespace ShelfScan
             Console.WriteLine($"Valid files:          {validCount,6:N0}");
             Console.WriteLine($"Invalid files:        {invalidCount,6:N0}");
             Console.WriteLine($"Total files checked:  {total,6:N0}");
+            float pc = (float)(validCount * 100.0) / (float)total;
+            string niceMessage = pc switch
+            {
+                >= 100.0f => "(perfect score!)",
+                >= 95.0f => "(excellent!)",
+                >= 90.0f => "(great job!)",
+                >= 85.0f => "(good effort)",
+                _ => ""
+            };
+            Console.WriteLine($"Correctness:          {pc,6:N2}% {niceMessage}");
 
             Console.WriteLine();
             Console.WriteLine($"---------- END {mediaType.ToUpper(CultureInfo.CurrentCulture)} REPORT ----------");
@@ -211,6 +219,33 @@ namespace ShelfScan
             }
 
             Environment.Exit(0);
+        }
+
+        /// <summary>
+        /// Add all media files in the specified folder and its subfolders to the list. Ignores
+        /// any "Plex Versions" folders.
+        /// </summary>
+        /// <param name="folder">Root folder</param>
+        /// <param name="files">List to add files to</param>
+        /// <param name="extensions">Extensions to include</param>
+        private static void AddMediaFiles(string folder, List<string> files, IEnumerable<string> extensions)
+        {
+            foreach (var dir in Directory.EnumerateDirectories(folder))
+            {
+                // Skip Plex Versions and all subfolders
+                if (Path.GetFileName(dir).Equals("Plex Versions", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                AddMediaFiles(dir, files, extensions);
+            }
+
+            // Collect files in this folder
+            foreach (var file in Directory.EnumerateFiles(folder))
+            {
+                var ext = Path.GetExtension(file);
+                if (!string.IsNullOrEmpty(ext) && extensions.Contains(ext, StringComparer.OrdinalIgnoreCase))
+                    files.Add(file);
+            }
         }
     }
 }

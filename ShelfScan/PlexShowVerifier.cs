@@ -30,8 +30,11 @@ namespace ShelfScan
         /// </summary>
         public static bool VerifyShow(string filePath)
         {
-            bool allGood = true;
+            // Ignore featurettes
+            if (Path.GetFileNameWithoutExtension(filePath).EndsWith("-featurette", StringComparison.OrdinalIgnoreCase))
+                return true;
 
+            bool allGood = true;
             string? seasonFolder = null;
             string? showFolder = null;
 
@@ -125,7 +128,7 @@ namespace ShelfScan
 
             if (!Regex.IsMatch(seasonFolder, pattern))
             {
-                Console.WriteLine($"\n{filePath}\n  Season folder name '{seasonFolder}' is invalid. Expected: 'Season X' or 'Season XX' (any number of digits) or 'Specials'.");
+                Console.WriteLine($"\n{filePath}\n  Season folder name '{seasonFolder}' is invalid. Expected: 'Season X' (any number of digits) or 'Specials'.");
                 return false;
             }
 
@@ -142,8 +145,8 @@ namespace ShelfScan
 
             if (isDateBasedShow)
             {
-                // Date-based format: Show Name - YYYY-MM-DD - Optional Info
-                string datePattern = @"^.+ - (\d{4}-\d{2}-\d{2}|\d{2}-\d{2}-\d{4})( - .+)?$";
+                // Date-based format: Show Name - YYYY-MM-DD - Optional Info (dashes periods or spaces)
+                string datePattern = @"^.+ - (\d{4}[-\. ]\d{2}[-\. ]\d{2}|\d{2}[-\. ]\d{2}[-\. ]\d{4})( - .+)?$";
                 if (!Regex.IsMatch(fileName, datePattern))
                 {
                     Console.WriteLine($"\n{filePath}\n  Invalid date-based episode filename. Expected format: 'Show Name - YYYY-MM-DD - Optional Info.ext' or 'Show Name - DD-MM-YYYY - Optional Info.ext'.");
@@ -155,7 +158,7 @@ namespace ShelfScan
                 // Season-based: check parts individually
 
                 // 1. Check main episode SXXEYY
-                var mainEpisodeMatch = Regex.Match(fileName, @"[sS](\d{1,2})[eE](\d{1,2})");
+                var mainEpisodeMatch = Regex.Match(fileName, @"[sS](\d{1,4})[eE](\d{1,4})");
                 if (!mainEpisodeMatch.Success)
                 {
                     Console.WriteLine($"\n{filePath}\n  Invalid main episode number. Expected format 'SXXEYY'.");
@@ -168,7 +171,7 @@ namespace ShelfScan
                 {
                     // If a dash exists after the main episode but does not match '-eZZ', it's invalid
                     string remaining = fileName[(mainEpisodeMatch.Index + mainEpisodeMatch.Length)..];
-                    if (remaining.StartsWith('-') && !Regex.IsMatch(remaining, @"^-[eE]\d{2}"))
+                    if (remaining.StartsWith('-') && !Regex.IsMatch(remaining, @"^-[eE]\d{4}"))
                     {
                         Console.WriteLine($"\n{filePath}\n  Invalid multi-episode format. Expected '-eZZ' after main episode number.");
                         return false;

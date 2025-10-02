@@ -42,76 +42,81 @@ namespace ShelfScan
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public static bool VerifyMovies(string filePath)
+        /// 
+
+        public static bool VerifyMovies(string filePath, string rootFolder)
         {
             string fileName = Path.GetFileName(filePath);
-            string parentFolder = Path.GetFileName(Path.GetDirectoryName(filePath)!);
             string folderPath = Path.GetDirectoryName(filePath)!;
-            bool isValid = true;
+            string parentFolder = Path.GetFileName(folderPath);
 
-            // Strip out [brackets]
-            string cleanFileName = StripBrackets(fileName);
             string cleanFolderName = StripBrackets(parentFolder);
 
             // 1. Check for extras in subdirectory
-            string grandParentFolder = Path.GetFileName(Path.GetDirectoryName(folderPath)!);
             if (Array.Exists(ExtraSubdirectories, s => s.Equals(cleanFolderName, StringComparison.OrdinalIgnoreCase)))
-            {
-                // File is inside an extras folder → ignore
                 return true;
-            }
 
             // 2. Check for inline extras in filename
             foreach (var extra in InlineExtraSuffixes)
+                if (fileName.EndsWith(extra + Path.GetExtension(filePath), StringComparison.OrdinalIgnoreCase))
+                    return true;
+
+            // 3. Validate { } blocks
+            var braceMatches = Regex.Matches(fileName, @"\{.*?\}");
+            foreach (Match match in braceMatches)
             {
-                if (cleanFileName.EndsWith(extra + Path.GetExtension(filePath), StringComparison.OrdinalIgnoreCase))
+                string content = match.Value;
+                if (!content.StartsWith("{edition-", StringComparison.OrdinalIgnoreCase) &&
+                    !content.StartsWith("{imdb-", StringComparison.OrdinalIgnoreCase) &&
+                    !content.StartsWith("{tmdb-", StringComparison.OrdinalIgnoreCase))
                 {
-                    return true; // Inline extra → ignore
+                    Console.WriteLine($"\n{filePath}\n  Invalid block '{content}'. Must be edition-, imdb-, or tmdb-");
+                    return false;
                 }
             }
 
-            // 3. Regex for main movie file
-            string pattern = @"^(?<title>.+?) \((?<year>\d{4})( \{(imdb|tmdb)-[^\}]+\})?\)( (?<edition>\{edition-[^\}]+\}))?(?<split>-(cd|disc|disk|dvd|part|pt)\d+)?\.(mkv|mp4)$";
-            Regex regex = new(pattern, RegexOptions.IgnoreCase);
+            // 4. Strip { } and [ ] for core validation only
+            string coreName = Regex.Replace(Path.GetFileNameWithoutExtension(fileName), @"(\{.*?\}|\[.*?\])", "").Trim();
 
-            if (!regex.IsMatch(cleanFileName))
+            // 5. Validate core name: title, year, optional split (only valid CD/disc/part)
+            string corePattern = @"^(?<title>.+) \((?<year>\d{4})\)\s*( - (?<split>cd\d+|disc\d+|disk\d+|dvd\d+|part\d+|pt\d+))?$";
+            Regex coreRegex = new(corePattern, RegexOptions.IgnoreCase);
+            var coreMatch = coreRegex.Match(coreName);
+
+            if (!coreMatch.Success)
             {
-                Console.WriteLine($"\n{filePath}\n  Invalid naming format. Expected 'Movie Name (YYYY){{id}}{{edition}}{{split}}.ext'");
+                Console.WriteLine($"\n{filePath}\n  Invalid naming format. Expected 'Movie Name (YYYY){{optional split}}'");
                 return false;
             }
 
-            Match match = regex.Match(cleanFileName);
-            string title = match.Groups["title"].Value.Trim();
-            string yearStr = match.Groups["year"].Value;
-            string edition = match.Groups["edition"].Success ? match.Groups["edition"].Value : "";
-            string split = match.Groups["split"].Success ? match.Groups["split"].Value : "";
+            string title = coreMatch.Groups["title"].Value.Trim();
+            string yearStr = coreMatch.Groups["year"].Value;
 
-            // 4. Validate year
+            // 6. Validate year
             if (!int.TryParse(yearStr, out int year) || year < 1900 || year > DateTime.Now.Year + 1)
             {
-                Console.WriteLine($"\n{filePath}\n  Invalid year '{yearStr}'. Must be between 1900 and {DateTime.Now.Year + 1}.");
-                isValid = false;
+                Console.WriteLine($"\n{filePath}\n  Invalid year '{yearStr}'. Must be between 1900 and {DateTime.Now.Year + 1}");
+                return false;
             }
 
-            // 5. Validate folder consistency
-            string expectedFolder = $"{title} ({year})";
-            if (!string.IsNullOrEmpty(edition))
-                expectedFolder += " " + edition;
-
-            if (!expectedFolder.Equals(cleanFolderName, StringComparison.OrdinalIgnoreCase))
+            // 7. Validate folder consistency if not in root
+            if (!string.Equals(Path.GetFullPath(folderPath).TrimEnd('\\'),
+                               Path.GetFullPath(rootFolder).TrimEnd('\\'),
+                               StringComparison.OrdinalIgnoreCase))
             {
-                Console.WriteLine($"\n{filePath}\n  Folder name '{parentFolder}' does not match expected '{expectedFolder}'");
-                isValid = false;
+                // Remove optional split from filename for folder comparison
+                string fileBaseName = Regex.Replace(Path.GetFileNameWithoutExtension(fileName),
+                                                    @" - (cd\d+|disc\d+|disk\d+|dvd\d+|part\d+|pt\d+)$",
+                                                    "", RegexOptions.IgnoreCase);
+
+                if (!fileBaseName.Equals(parentFolder, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"\n{filePath}\n  Folder name '{parentFolder}' does not match filename '{fileBaseName}'");
+                    return false;
+                }
             }
 
-            // 6. Split suffix rules for stand-alone files
-            if (string.IsNullOrEmpty(parentFolder) && !string.IsNullOrEmpty(split))
-            {
-                Console.WriteLine($"\n{filePath}\n  Split suffix used in a stand-alone file without folder.");
-                isValid = false;
-            }
-
-            return isValid;
+            return true;
         }
 
         /// <summary>
